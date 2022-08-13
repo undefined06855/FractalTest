@@ -19,7 +19,7 @@
     </head>
 
     <body>
-        <div>Click three points to make a Sierpiński triangle (more than three doesn't work so well...).</div>
+        <div>Click in three places to make a Sierpiński triangle with 50,000 points (more than three doesn't work so well...).</div>
         <canvas></canvas>
 
         <script>
@@ -29,7 +29,7 @@
 
             var shapePoints = []
 
-              , points = []
+              , lastPos = []
               , hasFirstPoint = false
 
             canvas.addEventListener("click", event => {
@@ -46,20 +46,18 @@
                     {
                         const firstX = Math.floor(Math.random() * canvas.width)
                             , firstY = Math.floor(Math.random() * canvas.height)
-                        points.push([firstX, firstY])
+                        
+                        lastPos = [firstX, firstY]
                         ctx.fillRect(firstX, firstY, 1, 1)
                         hasFirstPoint = true
                     }
                     else
                     {
-                        const lastX = points[points.length - 1][0]
-                            , lastY = points[points.length - 1][1]
-
                         // Get average between two points
-                        const averageX = ( lastX + shapePoints[num][0] ) / 2
-                            , averageY = ( lastY + shapePoints[num][1] ) / 2
+                        const averageX = ( lastPos[0] + shapePoints[num][0] ) / 2
+                            , averageY = ( lastPos[1] + shapePoints[num][1] ) / 2
 
-                        points.push([averageX, averageY])
+                        lastPos = [averageX, averageY]
                         ctx.fillRect(averageX, averageY, 1, 1)
                     }
             }
