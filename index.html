@@ -23,53 +23,7 @@
         <canvas></canvas>
 
         <script>
-            const canvas = document.querySelector("canvas")
-                , count = 50_000
-                , ctx = canvas.getContext("2d")
-
-            var shapePoints = []
-
-              , lastPos = []
-              , hasFirstPoint = false
-
-            canvas.addEventListener("click", event => {
-                shapePoints.push([event.offsetX, event.offsetY])
-                r()
-            })
-
-            function draw()
-            {
-                num = Math.floor(Math.random() * shapePoints.length)
-
-                if (shapePoints.length != 0)
-                    if (!hasFirstPoint)
-                    {
-                        const firstX = Math.floor(Math.random() * canvas.width)
-                            , firstY = Math.floor(Math.random() * canvas.height)
-                        
-                        lastPos = [firstX, firstY]
-                        ctx.fillRect(firstX, firstY, 1, 1)
-                        hasFirstPoint = true
-                    }
-                    else
-                    {
-                        // Get average between two points
-                        const averageX = ( lastPos[0] + shapePoints[num][0] ) / 2
-                            , averageY = ( lastPos[1] + shapePoints[num][1] ) / 2
-
-                        lastPos = [averageX, averageY]
-                        ctx.fillRect(averageX, averageY, 1, 1)
-                    }
-            }
-
-            r=()=>{
-                canvas.width=window.innerWidth 
-                canvas.height=window.innerHeight
-                for (var i = 0; i < count; i++) {draw()}
-            }
-
-            window.addEventListener("resize",r)
-            r()
+            const t=document.querySelector("canvas"),e=5e4,n=t.getContext("2d");var o=[],i=[],h=!1;function a(){if(p=Math.floor(Math.random()*o.length),0!=o.length)if(h){const t=(i[0]+o[p][0])/2,e=(i[1]+o[p][1])/2;i=[t,e],n.fillRect(t,e,1,1)}else{const e=Math.floor(Math.random()*t.width),o=Math.floor(Math.random()*t.height);i=[e,o],n.fillRect(e,o,1,1),h=!0}}t.addEventListener("click",t=>{o.push([t.offsetX,t.offsetY]),r()}),r=(()=>{t.width=window.innerWidth,t.height=window.innerHeight;for(var e=0;e<5e4;e++)a()}),window.addEventListener("resize",r),r();
         </script>
     </body>
 </html>
