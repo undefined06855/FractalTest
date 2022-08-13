@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+    <head>
+        <title> Fractal Test </title>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>Click three points to make a Sierpiński triangle (more than three doesn't work so well...).</div>
+        <canvas></canvas>
+
+        <script>
+            const canvas = document.querySelector("canvas")
+                , count = 50_000
+                , ctx = canvas.getContext("2d")
+
+            var shapePoints = []
+
+              , points = []
+              , hasFirstPoint = false
+
+            canvas.addEventListener("click", event => {
+                shapePoints.push([event.offsetX, event.offsetY])
+                r()
+            })
+
+            function draw()
+            {
+                num = Math.floor(Math.random() * shapePoints.length)
+
+                if (shapePoints.length != 0)
+                    if (!hasFirstPoint)
+                    {
+                        const firstX = Math.floor(Math.random() * canvas.width)
+                            , firstY = Math.floor(Math.random() * canvas.height)
+                        points.push([firstX, firstY])
+                        ctx.fillRect(firstX, firstY, 1, 1)
+                        hasFirstPoint = true
+                    }
+                    else
+                    {
+                        const lastX = points[points.length - 1][0]
+                            , lastY = points[points.length - 1][1]
+
+                        // Get average between two points
+                        const averageX = ( lastX + shapePoints[num][0] ) / 2
+                            , averageY = ( lastY + shapePoints[num][1] ) / 2
+
+                        points.push([averageX, averageY])
+                        ctx.fillRect(averageX, averageY, 1, 1)
+                    }
+            }
+
+            r=()=>{
+                canvas.width=window.innerWidth 
+                canvas.height=window.innerHeight
+                for (var i = 0; i < count; i++) {draw()}
+            }
+
+            window.addEventListener("resize",r)
+            r()
+        </script>
+    </body>
+</html>
